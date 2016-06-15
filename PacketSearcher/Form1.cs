@@ -45,7 +45,7 @@ namespace PacketSearcher
             openFileDialog1.Title = "逆アセのリザルトファイルを選択してください";
             if (openFileDialog1.ShowDialog(this) == DialogResult.OK)
             {
-                this.Text = "解析中...";
+                this.Text = string.Format("解析中...( {0} )", Path.GetFileName(openFileDialog1.FileName));
                 await Task.Run(() =>
                 {
                     using (StreamReader reader = new StreamReader(openFileDialog1.FileName))
@@ -108,7 +108,7 @@ namespace PacketSearcher
                         }
                     }
                 });
-                this.Text = "解析完了！！";
+                this.Text = string.Format("解析完了！！ ( {0} )", Path.GetFileName(openFileDialog1.FileName));
                 this.button1.Enabled = true;
                 this.button2.Enabled = true;
             }
