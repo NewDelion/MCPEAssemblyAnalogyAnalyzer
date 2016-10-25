@@ -67,7 +67,7 @@ namespace PacketSearcher
                                     Console.WriteLine("Detected {0}", Convert.ToUInt32(line_protocol.Groups[1].Value, 16));
                                 }
                             }
-                            else if (Regex.IsMatch(line, @"([A-Za-z0-9_]+Packet)::getId\(\)"))
+                            else if (Regex.IsMatch(line, @"([A-Za-z0-9_]+Packet)::getId\(\) const\>"))
                             {
                                 Match line_packet_getid = Regex.Match(line, @"([A-Za-z0-9_]+Packet)::getId\(\)");
                                 string name = line_packet_getid.Groups[1].Value;
@@ -79,14 +79,14 @@ namespace PacketSearcher
                                 Match line_id = Regex.Match(next, "[0-9a-f]{4}[ \t]+movs[ \t]+r0, #([0-9]+)");
                                 if (line_id.Success)
                                 {
-                                    uint id = Convert.ToUInt32(line_id.Groups[1].Value, 16) + 0x8e;
+                                    uint id = Convert.ToUInt32(line_id.Groups[1].Value, 16);
                                     Console.WriteLine(" Detected {0}", id);
                                     pkColl.get(name).id = id;
                                 }
                             }
-                            else if (Regex.IsMatch(line, @"^[0-9a-f]+ \<([A-Za-z0-9_]+Packet)::read\(RakNet::BitStream\*\)\>:"))
+                            else if (Regex.IsMatch(line, @"^[0-9a-f]+ \<([A-Za-z0-9_]+Packet)::read\((RakNet::BitStream\*|BinaryStream\&)\)\>:"))
                             {
-                                Match line_instr_start = Regex.Match(line, @"^[0-9a-f]+ <([A-Za-z0-9_]+Packet)::read\(RakNet::BitStream\*\)>:");
+                                Match line_instr_start = Regex.Match(line, @"^[0-9a-f]+ <([A-Za-z0-9_]+Packet)::read\((RakNet::BitStream\*|BinaryStream\&)\)>:");
                                 Console.WriteLine("Line {0}: Reading...", linesCnt);
                                 string pkName = line_instr_start.Groups[1].Value;
                                 Packet pk = pkColl.get(pkName);
