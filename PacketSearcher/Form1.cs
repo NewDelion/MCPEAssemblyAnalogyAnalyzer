@@ -67,9 +67,9 @@ namespace PacketSearcher
                                     Console.WriteLine("Detected {0}", Convert.ToUInt32(line_protocol.Groups[1].Value, 16));
                                 }
                             }
-                            else if (Regex.IsMatch(line, @"([A-Za-z0-9_]+Packet)::getId\(\) const\>"))
+                            else if (Regex.IsMatch(line, @"(\w+Packet)::getId\(\) const\>"))
                             {
-                                Match line_packet_getid = Regex.Match(line, @"([A-Za-z0-9_]+Packet)::getId\(\)");
+                                Match line_packet_getid = Regex.Match(line, @"(\w+Packet)::getId\(\)");
                                 string name = line_packet_getid.Groups[1].Value;
 
                                 Console.WriteLine("Line {0}: Reading...", linesCnt);
@@ -84,9 +84,9 @@ namespace PacketSearcher
                                     pkColl.get(name).id = id;
                                 }
                             }
-                            else if (Regex.IsMatch(line, @"^[0-9a-f]+ \<([A-Za-z0-9_]+Packet)::read\((RakNet::BitStream\*|BinaryStream\&)\)\>:"))
+                            else if (Regex.IsMatch(line, @"^[0-9a-f]+ \<(\w+Packet)::read\((RakNet::BitStream\*|BinaryStream\&)\)\>:"))
                             {
-                                Match line_instr_start = Regex.Match(line, @"^[0-9a-f]+ <([A-Za-z0-9_]+Packet)::read\((RakNet::BitStream\*|BinaryStream\&)\)>:");
+                                Match line_instr_start = Regex.Match(line, @"^[0-9a-f]+ <(\w+Packet)::read\((RakNet::BitStream\*|BinaryStream\&)\)>:");
                                 Console.WriteLine("Line {0}: Reading...", linesCnt);
                                 string pkName = line_instr_start.Groups[1].Value;
                                 Packet pk = pkColl.get(pkName);
