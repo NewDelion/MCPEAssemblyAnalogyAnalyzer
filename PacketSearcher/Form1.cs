@@ -79,7 +79,7 @@ namespace PacketSearcher
                                 Match line_id = Regex.Match(next, "[0-9a-f]{4}[ \t]+movs[ \t]+r0, #([0-9]+)");
                                 if (line_id.Success)
                                 {
-                                    uint id = Convert.ToUInt32(line_id.Groups[1].Value, 16);
+                                    uint id = Convert.ToUInt32(line_id.Groups[1].Value, 10);
                                     Console.WriteLine(" Detected {0}", id);
                                     pkColl.get(name).id = id;
                                 }
@@ -97,7 +97,9 @@ namespace PacketSearcher
                                     Console.CursorLeft = 0;
                                     Console.Write("Line {0}: Reading {1} packet structure...", linesCnt, pkName);
                                     line = reader.ReadLine().TrimEnd();
-                                    if (line.Length - 2 != line.TrimStart(' ').Length)
+                                    //if (line.Length - 2 != line.TrimStart(' ').Length)
+                                    //    break;
+                                    if (line == "")
                                         break;
                                     pk.analyze(line);
                                 }
